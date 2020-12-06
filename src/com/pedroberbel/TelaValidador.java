@@ -27,7 +27,7 @@ public class TelaValidador extends JFrame implements WindowListener, ActionListe
     private Cliente cliente = new Cliente();
     private Validador validador = new Validador();
 
-
+    public TratamentoExcecao tratamentoExcecao = new TratamentoExcecao();
 
     public TelaValidador(){
         dFrame = new Dimension(350,400);
@@ -167,11 +167,19 @@ public class TelaValidador extends JFrame implements WindowListener, ActionListe
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == btnVerificaIntervalo){
-            this.dataInicio = this.txtDataInicio.getText();
-            this.dataFim = this.txtDataFim.getText();
+            try {
+                if (this.txtDataInicio.getText().equals("") || this.txtDataFim.getText().equals("")) {
+                    throw new TratamentoExcecao();
+                }
 
-            this.validador.verificaBackup(this.dataInicio, this.dataFim, this.bancos);
+                this.dataInicio = this.txtDataInicio.getText();
+                this.dataFim = this.txtDataFim.getText();
 
+                this.validador.verificaBackup(this.dataInicio, this.dataFim, this.bancos);
+
+            } catch (TratamentoExcecao excecao) {
+                JOptionPane.showMessageDialog(null, "Digite a data inicial e a data final \n no formato dd\\mm\\aaaa");
+            }
         }
 
         if(e.getSource() == btnRelatorio){
@@ -184,10 +192,15 @@ public class TelaValidador extends JFrame implements WindowListener, ActionListe
         }
 
         if (e.getSource() == btnVerifica) {
-
-            this.data = this.txtData.getText();
-            this.validador.verificaBackup(this.data, this.bancos);
-
+            try {
+                if (this.txtData.getText().equals("")) {
+                    throw new TratamentoExcecao();
+                }
+                this.data = this.txtData.getText();
+                this.validador.verificaBackup(this.data, this.bancos);
+            } catch (TratamentoExcecao excecao){
+                JOptionPane.showMessageDialog(null, "Digite uma data no formato dd\\mm\\aaaa");
+            }
         }
 
         if(e.getSource() == btnRelatorio){
