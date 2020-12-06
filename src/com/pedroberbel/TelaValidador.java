@@ -182,15 +182,6 @@ public class TelaValidador extends JFrame implements WindowListener, ActionListe
             }
         }
 
-        if(e.getSource() == btnRelatorio){
-            try {
-                Process p = Runtime.getRuntime().exec("C:\\WINDOWS\\system32\\notepad.exe C:\\Clientes\\report.txt");
-            }
-            catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-        }
-
         if (e.getSource() == btnVerifica) {
             try {
                 if (this.txtData.getText().equals("")) {
